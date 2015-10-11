@@ -11,7 +11,7 @@
   
 #Help
 
-      http://localhost:61220/RESTfulService.svc/help
+      http://localhost:port/RESTfulService.svc/help
 
 #Requests for JSON
 
