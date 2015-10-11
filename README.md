@@ -7,21 +7,22 @@ Note: localhost:port is your specific deployment host and port number.
       Go to View->Composer (F9)
   
 
-Help:
-----
+#Help
+
 http://localhost:61220/RESTfulService.svc/help
 
-Requests for JSON:
------------------
 
-Http GET request:
------------------
+#Requests for JSON
+
+
+**Http GET request**
+
 GET http://localhost:61220/RESTfulService.svc/Data/73 HTTP/1.1
 User-Agent: Fiddler
 Content-Type: application/json
 
-Expected Response:
-------------------
+**Expected Response**
+
 HTTP/1.1 200 OK
 Cache-Control: private
 Content-Length: 50
@@ -29,8 +30,8 @@ Content-Type: application/json; charset=utf-8
 
 [{"BoolValue":false,"StringValue":"some data #1"}]
 
-Http PUT Request:
------------------
+**Http PUT Request**
+
 PUT http://localhost:61220/RESTfulService.svc/AddData/ HTTP/1.1
 User-Agent: Fiddler
 Content-Type: application/json
@@ -42,8 +43,8 @@ Content-Length: 60
  "StringValue": "some new data"
 }
 
-Expected Response:
-------------------
+**Expected Response**
+
 HTTP/1.1 200 OK
 Cache-Control: private
 Content-Length: 48
@@ -52,18 +53,17 @@ Content-Type: application/json; charset=utf-8
 {"BoolValue":true,"StringValue":"some new data"}
 
 
-Requests for bare XML:
-----------------------
+#Requests for bare XML
 
-Http GET Request:
------------------
+**Http GET Request**
+
 GET http://localhost:61220/RESTfulService.svc/xml/Data/73 HTTP/1.1
 User-Agent: Fiddler
 Content-Type: application/xml
 Host: localhost:61220
 
-Expected Response:
-------------------
+**Expected Response**
+
 HTTP/1.1 200 OK
 Cache-Control: private
 Content-Length: 256
