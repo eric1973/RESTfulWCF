@@ -11,13 +11,13 @@
   
 #Help
 
-      http://localhost:61220/RESTfulService.svc/help
+      http://localhost:port/RESTfulService.svc/help
 
 #Requests for JSON
 
 **Http GET request**
 
-      GET http://localhost:61220/RESTfulService.svc/Data/73 HTTP/1.1
+      GET http://localhost:port/RESTfulService.svc/Data/73 HTTP/1.1
       User-Agent: Fiddler
       Content-Type: application/json
 
@@ -32,10 +32,10 @@
 
 **Http PUT Request**
 
-      PUT http://localhost:61220/RESTfulService.svc/AddData/ HTTP/1.1
+      PUT http://localhost:port/RESTfulService.svc/AddData/ HTTP/1.1
       User-Agent: Fiddler
       Content-Type: application/json
-      Host: localhost:61220
+      Host: localhost:port
       Content-Length: 60
       
       {
@@ -56,10 +56,10 @@
 
 **Http GET Request**
 
-      GET http://localhost:61220/RESTfulService.svc/xml/Data/73 HTTP/1.1
+      GET http://localhost:port/RESTfulService.svc/xml/Data/73 HTTP/1.1
       User-Agent: Fiddler
       Content-Type: application/xml
-      Host: localhost:61220
+      Host: localhost:port
 
 
 **Expected Response**
