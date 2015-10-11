@@ -14,11 +14,12 @@ http://localhost:61220/RESTfulService.svc/help
 
 #Requests for JSON
 
-
 **Http GET request**
 
 GET http://localhost:61220/RESTfulService.svc/Data/73 HTTP/1.1
+
 User-Agent: Fiddler
+
 Content-Type: application/json
 
 **Expected Response**
