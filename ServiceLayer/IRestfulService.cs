@@ -17,10 +17,19 @@ namespace ServiceLayer
         [WebInvoke(
             Method = "GET", 
             BodyStyle = WebMessageBodyStyle.Bare, 
-            RequestFormat = WebMessageFormat.Json, 
+            RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json, 
             UriTemplate = "Data/{value}")]
-        List<CompositeType> GetData(string value);
+        List<CompositeType> GetJsonData(string value);
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "xml/Data/{value}")]
+        List<CompositeType> GetXmlData(string value);
 
         [OperationContract]
         [WebInvoke(

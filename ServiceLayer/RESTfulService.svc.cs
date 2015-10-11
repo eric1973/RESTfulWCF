@@ -26,9 +26,19 @@ namespace ServiceLayer
             };
         }
 
-        public List<CompositeType> GetData(string value)
+        private List<CompositeType> InnerGetData(string value)
         {
             return data;
+        }
+
+        public List<CompositeType> GetJsonData(string value)
+        {
+            return this.InnerGetData(value);
+        }
+
+        public List<CompositeType> GetXmlData(string value)
+        {
+            return this.InnerGetData(value);
         }
 
         public CompositeType AddData(CompositeType composite)
