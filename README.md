@@ -9,6 +9,10 @@
       I am using Fiddler for the composition of the HTTP Requests. 
       Go to View->Composer (F9)
   
+# REST HTML Client
+
+      RESTfulWCF/ServiceLayer/Views/rest.html
+
 #Help
 
       http://localhost:port/RESTfulService.svc/help
