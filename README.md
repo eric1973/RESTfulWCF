@@ -1,15 +1,16 @@
 # RESTfulWCF
 Demonstrates a REST-ful WCF Service which is capable of returning JSON and XML Data
 
-Note: localhost:port is your specific deployment host and port number.
+#Notes 
+
+      localhost:port is your specific deployment host and port number.
 
       I am using Fiddler for the composition of the HTTP Requests. 
       Go to View->Composer (F9)
   
-
 #Help
 
-http://localhost:61220/RESTfulService.svc/help
+      http://localhost:61220/RESTfulService.svc/help
 
 #Requests for JSON
 
