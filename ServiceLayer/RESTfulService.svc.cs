@@ -17,7 +17,6 @@ namespace ServiceLayer
     public class RESTfulService : IRestfulService
     {
         private static List<CompositeType> data;
-        private int instanceCount = 0;
 
         static RESTfulService()
         {
@@ -33,7 +32,6 @@ namespace ServiceLayer
 
         private List<CompositeType> InnerGetData(string value)
         {
-            instanceCount++;
             return data;
         }
 
