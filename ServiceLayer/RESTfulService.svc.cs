@@ -8,11 +8,16 @@ using System.Text;
 
 namespace ServiceLayer
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    /// <summary>
+    /// A singleton service. Service will allow only one call at a time.
+    /// </summary>
+   [ServiceBehavior(
+        InstanceContextMode = InstanceContextMode.Single, 
+        ConcurrencyMode = ConcurrencyMode.Single)]
     public class RESTfulService : IRestfulService
     {
         private static List<CompositeType> data;
+        private int instanceCount = 0;
 
         static RESTfulService()
         {
@@ -21,13 +26,14 @@ namespace ServiceLayer
                 new CompositeType
                 {
                     BoolValue = false,
-                    StringValue = "some data #1"
+                    StringValue = "some data "
                 }
             };
         }
 
         private List<CompositeType> InnerGetData(string value)
         {
+            instanceCount++;
             return data;
         }
 
