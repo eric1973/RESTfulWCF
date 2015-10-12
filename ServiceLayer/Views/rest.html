@@ -28,55 +28,113 @@
             console.log("DOM ready.");
 
             $("#readbtn").on("click", readData);
+            $("#createbtn").on("click", createData);
         });
 
         function readData() {
 
+            // Load Table HTML Template
+            $("#contentarea").load("read.html", function (response, status, xhr) {
+
+                if (status == "error") {
+
+                    $("#container").empty().html("Error: " + xhr.status + " " + xhr.statusText);
+                    return;
+                }
+
+                // Load Table Data
+                var restUrl = window.location.origin;
+                console.log("REStful WCLF Service Base URL: " + restUrl);
+
+                var value = "73";
+                var readUrl = restUrl + "/RESTfulService.svc/Data/" + value;
+
+
+                $.ajax({
+                    type: "GET",
+                    url: readUrl,
+                    contentType: "json",
+                    dataType: "json",
+                    success: function (data) {
+
+                        console.log(data);
+
+                        var $table = $('#dataTable');
+                        var $tableBody = $table.find('tbody');
+
+                        $.each(data, function (index, item) {
+
+                            var boolValue = item.BoolValue;
+                            var stringValue = item.StringValue;
+
+                            var htmlTableRow =
+                                "<tr>" +
+                                "<td>" + boolValue + "</td>" +
+                                    "<td>" + stringValue + "</td>" +
+                                    "<td>" +
+                                        "<div class=\"btn-toolbar\">" +
+                                            "<div class=\"btn-group\">" +
+                                                "<button type=\"button\" class=\"btn btn-primary disabled\">Edit</button>" +
+                                                "<button type=\"button\" class=\"btn btn-primary disabled\">Delete</button>" +
+                                            "</div>" +
+                                        "</div>" +
+                                    "</td>" +
+                                "</tr>";
+
+                            $tableBody.append(htmlTableRow);
+                        });
+                    },
+                    error: function (xhr) {
+                        alert(xhr.responseText);
+                    }
+                });
+            });
+        }
+
+        function createData() {
+            $("#contentarea").load("create.html", function () {
+                console.log("loaded partialview 'create.html' successfully...")
+                $("#createDataBtn").on("click", createDataRequest);
+            });
+
+ 
+        }
+
+        function createDataRequest() {
+            
+            var boolValue = $("#boolValue").is(":checked");
+            var stringValue = $("#stringValue").val();
+
+            var composite = {
+                "BoolValue": boolValue,
+                "StringValue": stringValue
+            };
+
+            var stringifiedData = JSON.stringify(composite);
+
             var restUrl = window.location.origin;
             console.log("REStful WCLF Service Base URL: " + restUrl);
 
-            var value = "73";
-            var readUrl = restUrl + "/RESTfulService.svc/Data/" + value;
-
+            var createUrl = restUrl + "/RESTfulService.svc/AddData/";
 
             $.ajax({
-                type: "GET",
-                url: readUrl,
-                contentType: "json",
+                type: "PUT",
+                url: createUrl,
+                data: stringifiedData,
+                contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (data) {
-
-                    console.log(data);
-
-                    var $table = $('#dataTable');
-                    var $tableBody = $table.find('tbody');
-
-                    $.each(data, function (index, item) {
-                        
-                        var boolValue = item.BoolValue;
-                        var stringValue = item.StringValue;
-                        
-                        var htmlTableRow =
-                            "<tr>" +
-                            "<td>" + boolValue + "</td>" +
-                                "<td>" + stringValue + "</td>" +
-                                "<td>" +
-                                    "<div class=\"btn-toolbar\">" +
-                                        "<div class=\"btn-group\">" +
-                                            "<button type=\"button\" class=\"btn btn-primary disabled\">Edit</button>" +
-                                            "<button type=\"button\" class=\"btn btn-primary disabled\">Delete</button>" +
-                                        "</div>" +
-                                    "</div>" +
-                                "</td>" +
-                            "</tr>";
-
-                        $tableBody.append(htmlTableRow);
-                    });
+                processData: true,
+                success: function (data, status, jqXHR) {
+                    console.log("Success on data create.");
+                    readData();
                 },
                 error: function (xhr) {
-                    alert(xhr.responseText);
+                    console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
+                    $("#errorcreate").empty().html(xhr.responseText);
                 }
+
             });
+
         }
 
     </script>
@@ -95,7 +153,7 @@
                             <button type="button" class="btn btn-primary disabled">GetData(XML)</button>                        
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary disabled">AddData(Json)</button>
+                            <button type="button" class="btn btn-primary" id="createbtn">AddData(Json)</button>
                             <button type="button" class="btn btn-primary disabled">AddData(XML)</button>
                         </div>
                     </div>
@@ -106,46 +164,8 @@
 
         <!-- Bottom Row -->
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="contentarea">
 
-                <!-- display table of ajax data -->
-                <div class="bs-example">
-                    <table class="table table-striped" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>BoolValue</th>
-                                <th>StringValue</th>
-                                <th>Modify</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>true</td>
-                                <td>John</td>
-                                <td>
-                                    <div class="btn-toolbar">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary disabled">Edit</button>
-                                            <button type="button" class="btn btn-primary disabled">Delete</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>false</td>
-                                <td>Peter</td>
-                                <td>
-                                    <div class="btn-toolbar">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary disabled">Edit</button>
-                                            <button type="button" class="btn btn-primary disabled">Delete</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
 
