@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Entities;
+using DataAccessLayer;
 
 namespace ServiceLayer
 {
@@ -16,23 +19,25 @@ namespace ServiceLayer
         ConcurrencyMode = ConcurrencyMode.Single)]
     public class RESTfulService : IRestfulService
     {
-        private static List<CompositeType> data;
+        private static IRepository<CompositeTypeEntity> repository;
 
         static RESTfulService()
         {
-            data = new List<CompositeType>
-            {
-                new CompositeType
-                {
-                    BoolValue = false,
-                    StringValue = "some data "
-                }
-            };
+            repository = new CompositeTypeRepository();
         }
 
         private List<CompositeType> InnerGetData(string value)
         {
-            return data;
+            return repository.Read().Select<CompositeTypeEntity, CompositeType>(
+                compositeEntity =>
+                
+                    new CompositeType
+                    {
+                        BoolValue = compositeEntity.BoolValue,
+                        StringValue = compositeEntity.StringValue
+                    }
+
+                ).ToList();
         }
 
         public List<CompositeType> GetJsonData(string value)
@@ -52,7 +57,13 @@ namespace ServiceLayer
                 throw new ArgumentNullException("composite");
             }
 
-            data.Add(composite);
+            var entity = new CompositeTypeEntity
+            {
+                BoolValue = composite.BoolValue,
+                StringValue = composite.StringValue
+            };
+
+            repository.Create(entity);
 
             return composite;
         }

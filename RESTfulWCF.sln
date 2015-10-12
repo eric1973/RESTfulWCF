@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\Cons
 		{812595CD-943C-4794-A79B-87C15315D1DB} = {812595CD-943C-4794-A79B-87C15315D1DB}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{75896C86-ABBC-4091-8B29-A535D0C9E7EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{9248E0B4-5111-4337-A11D-23F14A994B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9248E0B4-5111-4337-A11D-23F14A994B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9248E0B4-5111-4337-A11D-23F14A994B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75896C86-ABBC-4091-8B29-A535D0C9E7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75896C86-ABBC-4091-8B29-A535D0C9E7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75896C86-ABBC-4091-8B29-A535D0C9E7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75896C86-ABBC-4091-8B29-A535D0C9E7EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
