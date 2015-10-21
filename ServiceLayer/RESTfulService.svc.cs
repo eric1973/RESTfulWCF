@@ -33,6 +33,7 @@ namespace ServiceLayer
                 
                     new CompositeType
                     {
+                        Id = compositeEntity.Id,
                         BoolValue = compositeEntity.BoolValue,
                         StringValue = compositeEntity.StringValue
                     }
@@ -66,6 +67,22 @@ namespace ServiceLayer
             repository.Create(entity);
 
             return composite;
+        }
+
+        public bool DeleteData(string id)
+        {
+            int entityId = -1;
+
+            try {
+
+                entityId = Convert.ToInt32(id);
+
+            } catch (Exception)
+            {
+                return false;
+            }
+
+            return repository.Delete(entityId);
         }
     }
 }

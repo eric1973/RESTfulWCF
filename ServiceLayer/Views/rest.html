@@ -27,10 +27,20 @@
 
             console.log("DOM ready.");
 
-            $("#readbtn").on("click", readData);
+
             $("#createbtn").on("click", createData);
+            $("#readbtn").on("click", readData);
         });
 
+
+        function createData() {
+            $("#contentarea").load("create.html", function () {
+                console.log("loaded partialview 'create.html' successfully...")
+                $("#createDataBtn").on("click", createDataRequest);
+            });
+
+ 
+        }
         function readData() {
 
             // Load Table HTML Template
@@ -64,6 +74,7 @@
 
                         $.each(data, function (index, item) {
 
+                            var id = item.Id;
                             var boolValue = item.BoolValue;
                             var stringValue = item.StringValue;
 
@@ -74,14 +85,23 @@
                                     "<td>" +
                                         "<div class=\"btn-toolbar\">" +
                                             "<div class=\"btn-group\">" +
-                                                "<button type=\"button\" class=\"btn btn-primary disabled\">Edit</button>" +
-                                                "<button type=\"button\" class=\"btn btn-primary disabled\">Delete</button>" +
+                                                "<button type=\"button\" class=\"btn btn-primary disabled\" id=\"updatebtn\" data-id=\"" + id + "\">Edit</button>" +
+                                                "<button type=\"button\" class=\"btn btn-primary\" id=\"deletebtn\" data-id=\"" + id + "\">Delete</button>" +
                                             "</div>" +
                                         "</div>" +
                                     "</td>" +
                                 "</tr>";
 
-                            $tableBody.append(htmlTableRow);
+                            var $addedRow = $(htmlTableRow);
+
+                            $tableBody.append($addedRow);
+
+                            // add event handler
+                            var $updateBtn = $addedRow.find("#updatebtn");
+                            var $deleteBtn = $addedRow.find("#deletebtn");
+
+                            $updateBtn.on("click", updateData);
+                            $deleteBtn.on("click", deleteData);
                         });
                     },
                     error: function (xhr) {
@@ -90,14 +110,36 @@
                 });
             });
         }
+        function updateData() {
+            alert("Not implemented yet.");
+        }
+        function deleteData() {
+            $this = $(this);
+            var id = $this.data("id");
 
-        function createData() {
-            $("#contentarea").load("create.html", function () {
-                console.log("loaded partialview 'create.html' successfully...")
-                $("#createDataBtn").on("click", createDataRequest);
+            var restUrl = window.location.origin;
+            console.log("REStful WCLF Service Base URL: " + restUrl);
+
+            var deleteUrl = restUrl + "/RESTfulService.svc/DeleteData/" + id;
+
+            $.ajax({
+                type: "DELETE",
+                url: deleteUrl,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var result = data ? "Success on data delete." : "No entity found for given Id.";
+
+                    console.log(result);
+
+                    // Reload table data
+                    readData();
+                },
+                error: function (xhr) {
+                    alert("Error occured on data delete attempt.\nMessage: " + xhr.status + " " + xhr.statusText)
+                }
             });
 
- 
         }
 
         function createDataRequest() {
@@ -126,6 +168,8 @@
                 processData: true,
                 success: function (data, status, jqXHR) {
                     console.log("Success on data create.");
+
+                    // Reload table data
                     readData();
                 },
                 error: function (xhr) {

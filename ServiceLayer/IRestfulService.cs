@@ -40,6 +40,15 @@ namespace ServiceLayer
             UriTemplate = "AddData/")]
         CompositeType AddData(CompositeType composite);
 
+        [OperationContract]
+        [WebInvoke(
+            Method = "DELETE",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "DeleteData/{id}")]
+        bool DeleteData(string id);
+
         // TODO: Add your service operations here
     }
 
@@ -48,9 +57,16 @@ namespace ServiceLayer
     [DataContract]
     public class CompositeType
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        int id;
+        bool boolValue;
+        string stringValue;
 
+        [DataMember]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         [DataMember]
         public bool BoolValue
         {

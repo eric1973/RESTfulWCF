@@ -8,6 +8,7 @@ namespace DataAccessLayer.Entities
 {
     public class CompositeTypeEntity
     {
+        public int Id { get; set; }
         public bool BoolValue { get; set; }
         public string StringValue { get; set; }
     }
