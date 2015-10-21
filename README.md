@@ -56,6 +56,21 @@
       
       {"BoolValue":true,"StringValue":"some new data"}
 
+**Http DELETE Request**
+
+	DELETE http://localhost:port/RESTfulService.svc/DeleteData/1 HTTP/1.1
+	User-Agent: Fiddler
+	Content-Type: application/json
+
+**Expected Response**
+
+	HTTP/1.1 200 OK
+	Cache-Control: private
+	Content-Length: 4
+	Content-Type: application/json; charset=utf-8
+
+	true
+ 
 #Requests for bare XML
 
 **Http GET Request**
