@@ -27,11 +27,9 @@
 
             console.log("DOM ready.");
 
-
             $("#createbtn").on("click", createData);
             $("#readbtn").on("click", readData);
         });
-
 
         function createData() {
             $("#contentarea").load("create.html", function () {
@@ -40,6 +38,44 @@
             });
 
  
+        }
+        function createDataRequest() {
+
+            var boolValue = $("#boolValue").is(":checked");
+            var stringValue = $("#stringValue").val();
+
+            var composite = {
+                "BoolValue": boolValue,
+                "StringValue": stringValue
+            };
+
+            var stringifiedData = JSON.stringify(composite);
+
+            var restUrl = window.location.origin;
+            console.log("REStful WCLF Service Base URL: " + restUrl);
+
+            var createUrl = restUrl + "/RESTfulService.svc/AddData/";
+
+            $.ajax({
+                type: "PUT",
+                url: createUrl,
+                data: stringifiedData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true,
+                success: function (data, status, jqXHR) {
+                    console.log("Success on data create.");
+
+                    // Reload table data
+                    readData();
+                },
+                error: function (xhr) {
+                    console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
+                    $("#errorcreate").empty().html(xhr.responseText);
+                }
+
+            });
+
         }
         function readData() {
 
@@ -85,7 +121,7 @@
                                     "<td>" +
                                         "<div class=\"btn-toolbar\">" +
                                             "<div class=\"btn-group\">" +
-                                                "<button type=\"button\" class=\"btn btn-primary disabled\" id=\"updatebtn\" data-id=\"" + id + "\">Edit</button>" +
+                                                "<button type=\"button\" class=\"btn btn-primary\" id=\"editbtn\" data-id=\"" + id + "\">Edit</button>" +
                                                 "<button type=\"button\" class=\"btn btn-primary\" id=\"deletebtn\" data-id=\"" + id + "\">Delete</button>" +
                                             "</div>" +
                                         "</div>" +
@@ -97,10 +133,10 @@
                             $tableBody.append($addedRow);
 
                             // add event handler
-                            var $updateBtn = $addedRow.find("#updatebtn");
+                            var $editBtn = $addedRow.find("#editbtn");
                             var $deleteBtn = $addedRow.find("#deletebtn");
 
-                            $updateBtn.on("click", updateData);
+                            $editBtn.on("click", editData);
                             $deleteBtn.on("click", deleteData);
                         });
                     },
@@ -110,8 +146,105 @@
                 });
             });
         }
+        function editData() {
+            
+            // get the clicked button
+            var $this = $(this);
+
+            // get the id of the entity
+            var id = $this.data("id");
+
+            // get the enclosing (parent) table row
+            var $tr = $this.closest("tr");
+
+            // contained table data cells
+            var rawtd = $tr.children();
+
+            // 1st data cell of entity property
+            var $tdBoolValue = $(rawtd[0]);
+            var boolValue = $tdBoolValue.text();
+
+            var checked = boolValue === "true" ? "checked" : "";
+
+            // 2nd data cell of entity property
+            var $tdStringValue = $(rawtd[1]);
+            var stringValue = $tdStringValue.text();
+            
+            var editorTableRow =
+                "<tr data-id=\"" + id + "\">" +
+                    "<td><input type=\"checkbox\" class=\"form-control\" id=\"boolValue\"" + checked + "></td>" +
+                    "<td><input type=\"text\" class=\"form-control\" id=\"stringValue\" value=\"" + stringValue + "\"></td>" +
+                    "<td>" +
+                        "<div class=\"btn-toolbar\">" +
+                            "<div class=\"btn-group\">" +
+                                "<button type=\"button\" class=\"btn btn-primary\" id=\"updatebtn\" data-id=\"" + id + "\">Update</button>" +
+                            "</div>" +
+                        "</div>" +
+                    "</td>" +
+                "</tr>";
+
+
+            $editorTableRow = $(editorTableRow);
+
+            // add update data eventhandler 
+            $updateBtn = $editorTableRow.find("#updatebtn");
+            $updateBtn.on("click", updateData);
+
+            // show the entity data editor
+            $editorTableRow.insertAfter($tr);
+
+        }
         function updateData() {
-            alert("Not implemented yet.");
+            
+            // the update button
+            var $this = $(this);
+
+            // the enclosing editor table row
+            $tr = $this.closest("tr");
+
+            // entity id
+            var id = $tr.data("id");
+
+            var rawTableData = $tr.children();
+
+            // 1st entity field / value
+            var $tdBoolValue = $(rawTableData[0]);
+            var $boolValue = $tdBoolValue.find("#boolValue");
+            var checked = $boolValue.is(":checked");
+
+            // 2nd entity field / value
+            var $tdstringValue = $(rawTableData[1]);
+            var $stringValue = $tdstringValue.find("#stringValue");
+            var stringValue = $stringValue.val();
+
+            var composite = {
+                "Id": id,
+                "BoolValue": checked,
+                "StringValue": stringValue
+            };
+
+            var stringifiedData = JSON.stringify(composite);
+
+            var restUrl = window.location.origin;
+            var updateUrl = restUrl + "/RESTfulService.svc/UpdateData/" + id;
+
+            $.ajax({
+                type: "PUT",
+                url: updateUrl,
+                data: stringifiedData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true,
+                success: function (data, status, jqXHR) {
+                    console.log("Success on data update.");
+
+                    // reload table data
+                    readData();
+                },
+                error: function (xhr) {
+                    console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
+                }
+            });
         }
         function deleteData() {
             $this = $(this);
@@ -141,46 +274,6 @@
             });
 
         }
-
-        function createDataRequest() {
-            
-            var boolValue = $("#boolValue").is(":checked");
-            var stringValue = $("#stringValue").val();
-
-            var composite = {
-                "BoolValue": boolValue,
-                "StringValue": stringValue
-            };
-
-            var stringifiedData = JSON.stringify(composite);
-
-            var restUrl = window.location.origin;
-            console.log("REStful WCLF Service Base URL: " + restUrl);
-
-            var createUrl = restUrl + "/RESTfulService.svc/AddData/";
-
-            $.ajax({
-                type: "PUT",
-                url: createUrl,
-                data: stringifiedData,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                processData: true,
-                success: function (data, status, jqXHR) {
-                    console.log("Success on data create.");
-
-                    // Reload table data
-                    readData();
-                },
-                error: function (xhr) {
-                    console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
-                    $("#errorcreate").empty().html(xhr.responseText);
-                }
-
-            });
-
-        }
-
     </script>
 </head>
 <body>

@@ -49,6 +49,15 @@ namespace ServiceLayer
             UriTemplate = "DeleteData/{id}")]
         bool DeleteData(string id);
 
+        [OperationContract]
+        [WebInvoke(
+            Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "UpdateData/{id}")]
+        bool UpdateData(string id, CompositeType composite);
+
         // TODO: Add your service operations here
     }
 

@@ -84,5 +84,30 @@ namespace ServiceLayer
 
             return repository.Delete(entityId);
         }
+
+        public bool UpdateData(string id, CompositeType composite)
+        {
+            int entityId = -1;
+
+            try
+            {
+
+                entityId = Convert.ToInt32(id);
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            var compositeEntity = new CompositeTypeEntity
+            {
+                Id = entityId,
+                BoolValue = composite.BoolValue,
+                StringValue = composite.StringValue
+            };
+
+            return repository.Update(entityId, compositeEntity);
+        }
     }
 }

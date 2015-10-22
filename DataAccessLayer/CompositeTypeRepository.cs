@@ -55,7 +55,18 @@ namespace DataAccessLayer
 
         public bool Update(int id, CompositeTypeEntity entity)
         {
-            throw new NotImplementedException();
+            bool updated = false;
+
+            var updateableEntity = this.data.Where(item => item.Id == entity.Id).FirstOrDefault();
+
+            if (updateableEntity != null)
+            {
+                updateableEntity.BoolValue = entity.BoolValue;
+                updateableEntity.StringValue = entity.StringValue;
+                updated = true;
+            }
+
+            return updated;
         }
     }
 }

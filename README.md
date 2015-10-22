@@ -71,6 +71,29 @@
 
 	true
  
+**Http PUT Request for Data Update**
+
+	PUT http://localhost:port/RESTfulService.svc/UpdateData/1 HTTP/1.1
+	User-Agent: Fiddler
+	Content-Type: application/json
+	Host: localhost:port
+	Content-Length: 72
+
+	{
+	 "BoolValue":true,
+	 "Id":1,
+	 "StringValue":"some new data"
+	} 
+ 
+**Expected Response**
+
+	HTTP/1.1 200 OK
+	Cache-Control: private
+	Content-Length: 5
+	Content-Type: application/json; charset=utf-8
+
+	true
+ 
 #Requests for bare XML
 
 **Http GET Request**
