@@ -94,6 +94,12 @@ namespace ConsoleUI.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IRestfulService")]
     public interface IRestfulService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/GetAllJsonData", ReplyAction="http://tempuri.org/IRestfulService/GetAllJsonDataResponse")]
+        ConsoleUI.ServiceReference1.CompositeType[] GetAllJsonData();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/GetAllJsonData", ReplyAction="http://tempuri.org/IRestfulService/GetAllJsonDataResponse")]
+        System.Threading.Tasks.Task<ConsoleUI.ServiceReference1.CompositeType[]> GetAllJsonDataAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/GetJsonData", ReplyAction="http://tempuri.org/IRestfulService/GetJsonDataResponse")]
         ConsoleUI.ServiceReference1.CompositeType[] GetJsonData(string value);
         
@@ -150,6 +156,14 @@ namespace ConsoleUI.ServiceReference1 {
         
         public RestfulServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public ConsoleUI.ServiceReference1.CompositeType[] GetAllJsonData() {
+            return base.Channel.GetAllJsonData();
+        }
+        
+        public System.Threading.Tasks.Task<ConsoleUI.ServiceReference1.CompositeType[]> GetAllJsonDataAsync() {
+            return base.Channel.GetAllJsonDataAsync();
         }
         
         public ConsoleUI.ServiceReference1.CompositeType[] GetJsonData(string value) {

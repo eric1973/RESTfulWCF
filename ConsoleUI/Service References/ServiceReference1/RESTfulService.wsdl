@@ -7,6 +7,12 @@
       <xsd:import schemaLocation="http://localhost:61220/RESTfulService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ServiceLayer.DataContract" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IRestfulService_GetAllJsonData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllJsonData" />
+  </wsdl:message>
+  <wsdl:message name="IRestfulService_GetAllJsonData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllJsonDataResponse" />
+  </wsdl:message>
   <wsdl:message name="IRestfulService_GetJsonData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetJsonData" />
   </wsdl:message>
@@ -38,6 +44,10 @@
     <wsdl:part name="parameters" element="tns:UpdateDataResponse" />
   </wsdl:message>
   <wsdl:portType name="IRestfulService">
+    <wsdl:operation name="GetAllJsonData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/GetAllJsonData" message="tns:IRestfulService_GetAllJsonData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestfulService/GetAllJsonDataResponse" message="tns:IRestfulService_GetAllJsonData_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetJsonData">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/GetJsonData" message="tns:IRestfulService_GetJsonData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestfulService/GetJsonDataResponse" message="tns:IRestfulService_GetJsonData_OutputMessage" />
@@ -61,6 +71,15 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRestfulService" type="tns:IRestfulService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllJsonData">
+      <soap:operation soapAction="http://tempuri.org/IRestfulService/GetAllJsonData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetJsonData">
       <soap:operation soapAction="http://tempuri.org/IRestfulService/GetJsonData" style="document" />
       <wsdl:input>

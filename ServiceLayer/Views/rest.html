@@ -28,7 +28,10 @@
             console.log("DOM ready.");
 
             $("#createbtn").on("click", createData);
-            $("#readbtn").on("click", readData);
+            $("#readbtn").on("click", readAllData);
+
+            debugger;
+            readAllData();
         });
 
         function createData() {
@@ -67,7 +70,7 @@
                     console.log("Success on data create.");
 
                     // Reload table data
-                    readData();
+                    readAllData();
                 },
                 error: function (xhr) {
                     console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
@@ -77,7 +80,7 @@
             });
 
         }
-        function readData() {
+        function readAllData() {
 
             // Load Table HTML Template
             $("#contentarea").load("read.html", function (response, status, xhr) {
@@ -92,10 +95,8 @@
                 var restUrl = window.location.origin;
                 console.log("REStful WCLF Service Base URL: " + restUrl);
 
-                var value = "73";
-                var readUrl = restUrl + "/RESTfulService.svc/Data/" + value;
-
-
+                var readUrl = restUrl + "/RESTfulService.svc/Data";
+                
                 $.ajax({
                     type: "GET",
                     url: readUrl,
@@ -239,7 +240,7 @@
                     console.log("Success on data update.");
 
                     // reload table data
-                    readData();
+                    readAllData();
                 },
                 error: function (xhr) {
                     console.log("Error occured on data create. Message: " + xhr.status + " " + xhr.statusText);
@@ -266,7 +267,7 @@
                     console.log(result);
 
                     // Reload table data
-                    readData();
+                    readAllData();
                 },
                 error: function (xhr) {
                     alert("Error occured on data delete attempt.\nMessage: " + xhr.status + " " + xhr.statusText)

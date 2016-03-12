@@ -122,5 +122,20 @@ namespace ServiceLayer
 
             return repository.Update(entityId, compositeEntity);
         }
+
+        public List<CompositeType> GetAllJsonData()
+        {
+            return repository.Read().Select<CompositeTypeEntity, CompositeType>(
+                compositeEntity =>
+
+                    new CompositeType
+                    {
+                        Id = compositeEntity.Id,
+                        BoolValue = compositeEntity.BoolValue,
+                        StringValue = compositeEntity.StringValue
+                    }
+
+                ).ToList();
+        }
     }
 }
