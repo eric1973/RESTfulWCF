@@ -120,7 +120,7 @@
 
 #Requests to the SOAP Endpoint
 
-** Via ConsoleUI
+**Via ConsoleUI**
 
 	  Open the VS solution and launch the ServiceLayer Project. Then open a second instance of the
 	  same RESTful solution, set ConsoleUI project as the startup project and launch it. The communication
@@ -139,9 +139,9 @@
         </client>
       </system.serviceModel>
 	
-** Via SOAPUI
+**Via SOAPUI**
 
-		Import WSDL from WCF Service URL: http://localhost:61220/RESTfulService.svc?wsdl
+		Download WSDL from WCF Service URL: http://localhost:61220/RESTfulService.svc?wsdl
 		
 		Sample Request/Response
 		
