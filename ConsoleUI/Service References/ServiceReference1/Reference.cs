@@ -15,7 +15,7 @@ namespace ConsoleUI.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ServiceLayer")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ServiceLayer.DataContract")]
     [System.SerializableAttribute()]
     public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -24,6 +24,9 @@ namespace ConsoleUI.ServiceReference1 {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool BoolValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StringValueField;
@@ -47,6 +50,19 @@ namespace ConsoleUI.ServiceReference1 {
                 if ((this.BoolValueField.Equals(value) != true)) {
                     this.BoolValueField = value;
                     this.RaisePropertyChanged("BoolValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -95,6 +111,18 @@ namespace ConsoleUI.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/AddData", ReplyAction="http://tempuri.org/IRestfulService/AddDataResponse")]
         System.Threading.Tasks.Task<ConsoleUI.ServiceReference1.CompositeType> AddDataAsync(ConsoleUI.ServiceReference1.CompositeType composite);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/DeleteData", ReplyAction="http://tempuri.org/IRestfulService/DeleteDataResponse")]
+        bool DeleteData(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/DeleteData", ReplyAction="http://tempuri.org/IRestfulService/DeleteDataResponse")]
+        System.Threading.Tasks.Task<bool> DeleteDataAsync(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/UpdateData", ReplyAction="http://tempuri.org/IRestfulService/UpdateDataResponse")]
+        bool UpdateData(string id, ConsoleUI.ServiceReference1.CompositeType composite);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestfulService/UpdateData", ReplyAction="http://tempuri.org/IRestfulService/UpdateDataResponse")]
+        System.Threading.Tasks.Task<bool> UpdateDataAsync(string id, ConsoleUI.ServiceReference1.CompositeType composite);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -146,6 +174,22 @@ namespace ConsoleUI.ServiceReference1 {
         
         public System.Threading.Tasks.Task<ConsoleUI.ServiceReference1.CompositeType> AddDataAsync(ConsoleUI.ServiceReference1.CompositeType composite) {
             return base.Channel.AddDataAsync(composite);
+        }
+        
+        public bool DeleteData(string id) {
+            return base.Channel.DeleteData(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteDataAsync(string id) {
+            return base.Channel.DeleteDataAsync(id);
+        }
+        
+        public bool UpdateData(string id, ConsoleUI.ServiceReference1.CompositeType composite) {
+            return base.Channel.UpdateData(id, composite);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateDataAsync(string id, ConsoleUI.ServiceReference1.CompositeType composite) {
+            return base.Channel.UpdateDataAsync(id, composite);
         }
     }
 }

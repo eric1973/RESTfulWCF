@@ -1,6 +1,7 @@
 # RESTfulWCF
       
-      Demonstrates a REST-ful WCF Service which is capable of returning JSON and XML Data
+      Demonstrates a REST-ful WCF Service which is capable of returning JSON and bare XML Data
+	  and a ConsoleUI client which uses the SOAP endpoint of that service.
 
 #Notes 
 
@@ -116,3 +117,67 @@
             <BoolValue>false</BoolValue>
             <StringValue>some data #1</StringValue>
       </CompositeType></ArrayOfCompositeType>
+
+#Requests to the SOAP Endpoint
+
+** Via ConsoleUI
+
+	  Open the VS solution and launch the ServiceLayer Project. Then open a second instance of the
+	  same RESTful solution, set ConsoleUI project as the startup project and launch it. The communication
+	  from the client to the WCF service is done via that configured endpoint:
+	  
+	  <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IRestfulService" />
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:61220/RESTfulService.svc/soap"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IRestfulService"
+                contract="ServiceReference1.IRestfulService" name="BasicHttpBinding_IRestfulService" />
+        </client>
+      </system.serviceModel>
+	
+** Via SOAPUI
+
+		Import WSDL from WCF Service URL: http://localhost:61220/RESTfulService.svc?wsdl
+		
+		Sample Request/Response
+		
+		POST http://localhost:61220/RESTfulService.svc/soap HTTP/1.1
+		Accept-Encoding: gzip,deflate
+		Content-Type: text/xml;charset=UTF-8
+		SOAPAction: "http://tempuri.org/IRestfulService/GetXmlData"
+		Content-Length: 301
+		Host: localhost:61220
+		Connection: Keep-Alive
+		User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+		
+		HTTP/1.1 200 OK
+		Cache-Control: private
+		Content-Type: text/xml; charset=utf-8
+		Content-Encoding: gzip
+		Vary: Accept-Encoding
+		Server: Microsoft-IIS/10.0
+		X-AspNet-Version: 4.0.30319
+		X-SourceFiles: =?UTF-8?B?QzpcZGV2XFJFU1RmdWxXQ0ZcU2VydmljZUxheWVyXFJFU1RmdWxTZXJ2aWNlLnN2Y1xzb2Fw?=
+		X-Powered-By: ASP.NET
+		Date: Sat, 12 Mar 2016 08:44:31 GMT
+		Content-Length: 361
+
+		<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+		<s:Body>
+			<GetXmlDataResponse xmlns="http://tempuri.org/">
+				<GetXmlDataResult xmlns:a="http://schemas.datacontract.org/2004/07/ServiceLayer.DataContract" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+				<a:CompositeType>
+					<a:BoolValue>false</a:BoolValue>
+					<a:Id>2</a:Id>
+					<a:StringValue>some data </a:StringValue>
+					</a:CompositeType>
+				</GetXmlDataResult>
+			</GetXmlDataResponse>
+		</s:Body>
+		</s:Envelope>
+
+	  

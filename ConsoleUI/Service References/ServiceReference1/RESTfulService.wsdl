@@ -4,7 +4,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:61220/RESTfulService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:61220/RESTfulService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:61220/RESTfulService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ServiceLayer" />
+      <xsd:import schemaLocation="http://localhost:61220/RESTfulService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ServiceLayer.DataContract" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IRestfulService_GetJsonData_InputMessage">
@@ -25,6 +25,18 @@
   <wsdl:message name="IRestfulService_AddData_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddDataResponse" />
   </wsdl:message>
+  <wsdl:message name="IRestfulService_DeleteData_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteData" />
+  </wsdl:message>
+  <wsdl:message name="IRestfulService_DeleteData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestfulService_UpdateData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateData" />
+  </wsdl:message>
+  <wsdl:message name="IRestfulService_UpdateData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDataResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRestfulService">
     <wsdl:operation name="GetJsonData">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/GetJsonData" message="tns:IRestfulService_GetJsonData_InputMessage" />
@@ -37,6 +49,14 @@
     <wsdl:operation name="AddData">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/AddData" message="tns:IRestfulService_AddData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestfulService/AddDataResponse" message="tns:IRestfulService_AddData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/DeleteData" message="tns:IRestfulService_DeleteData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestfulService/DeleteDataResponse" message="tns:IRestfulService_DeleteData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestfulService/UpdateData" message="tns:IRestfulService_UpdateData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestfulService/UpdateDataResponse" message="tns:IRestfulService_UpdateData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRestfulService" type="tns:IRestfulService">
@@ -61,6 +81,24 @@
     </wsdl:operation>
     <wsdl:operation name="AddData">
       <soap:operation soapAction="http://tempuri.org/IRestfulService/AddData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteData">
+      <soap:operation soapAction="http://tempuri.org/IRestfulService/DeleteData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateData">
+      <soap:operation soapAction="http://tempuri.org/IRestfulService/UpdateData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

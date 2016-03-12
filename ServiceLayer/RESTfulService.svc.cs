@@ -8,6 +8,7 @@ using System.Text;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer;
+using ServiceLayer.DataContract;
 
 namespace ServiceLayer
 {
@@ -33,12 +34,24 @@ namespace ServiceLayer
                 
                     new CompositeType
                     {
-                        Id = compositeEntity.Id,
+                        Id = GetIntValue(value, compositeEntity.Id),
                         BoolValue = compositeEntity.BoolValue,
                         StringValue = compositeEntity.StringValue
                     }
 
                 ).ToList();
+        }
+
+        private int GetIntValue(string value, int repositoryId)
+        {
+            int intValue;
+
+            if (!Int32.TryParse(value, out intValue))
+            {
+                intValue = repositoryId;
+            }
+
+            return intValue;
         }
 
         public List<CompositeType> GetJsonData(string value)
