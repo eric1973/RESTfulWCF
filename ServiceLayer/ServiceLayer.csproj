@@ -65,8 +65,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Service1.svc" />
     <Content Include="Views\create.html" />
     <Content Include="Views\read.html" />
+    <Content Include="Views\readxmldata.html" />
     <Content Include="Views\rest.html" />
     <Content Include="RESTfulService.svc" />
     <Content Include="Scripts\bootstrap.js" />
@@ -77,11 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContract\CompositeType.cs" />
+    <Compile Include="IService1.cs" />
     <Compile Include="RESTfulService.svc.cs">
       <DependentUpon>RESTfulService.svc</DependentUpon>
     </Compile>
     <Compile Include="IRestfulService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service1.svc.cs">
+      <DependentUpon>Service1.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
